@@ -26,7 +26,7 @@ class CouturierController extends AbstractController
     public function loginconfirm(Request $request,EntityManagerInterface $manager): Response
     {
         $login = $request -> request -> get("exampleInputEmail1");
-        $password = $request -> request -> get("exampleInputPassword1");
+        $password = $request -> request -> get("password");
         $reponse = $manager -> getRepository(Utilisateur :: class) -> findOneBy([ 'login' => $login]);
         if ($reponse == NULL){
             $repons ="utilisateur inconnu";
