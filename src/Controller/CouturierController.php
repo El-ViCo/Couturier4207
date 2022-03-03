@@ -44,5 +44,34 @@ class CouturierController extends AbstractController
                 'Message' => $repons,
                 'login' => $login,
             ]);
-        }
+    }
+    /**
+     * @Route("/couturier/creationutilisateur", name="couturier/creationutilisateur")
+     */
+    public function creationutilisateur(): Response
+    {
+        return $this->render('couturier/creationutilisateur.html.twig', [
+            'controller_name' => 'CouturierController',
+        ]);
+    }
+    /**
+     * @Route("/couturier/ajoututilisateur", name="/couturier/ajoututilisateur")
+     */
+    public function ajoututilisateur(Request $request, EntityManagerInterface $manager): Response
+    {
+        $newUti = new Utilisateur();
+        $login = $request -> request -> get("login");
+        $password = $request -> request -> get("password");
+        $password = (password_hash($password, PASSWORD_DEFAULT));
+        $newUti->setLogin($login);
+        $newUti->setPassword($password);
+        $manager->persist($newUti);
+        $manager->flush();
+
+        $text = "Le nouveau compte a bien été créé !";
+
+       return $this->render('couturier/ajoututilisateur.html.twig', [
+            'text' => $text,
+        ]);
+}
     }
